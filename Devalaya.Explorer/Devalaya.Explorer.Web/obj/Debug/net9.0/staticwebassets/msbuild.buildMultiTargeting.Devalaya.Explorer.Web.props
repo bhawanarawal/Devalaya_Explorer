@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Devalaya.Explorer.Web.props" />
+</Project>

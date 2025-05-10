@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Devalaya.Explorer.Web.props" />
+</Project>
