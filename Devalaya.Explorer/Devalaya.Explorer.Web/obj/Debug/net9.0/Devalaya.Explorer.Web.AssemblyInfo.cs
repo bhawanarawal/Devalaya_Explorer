@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Devalaya.Explorer.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+444e078429d0aeb9f923d90cb4fd5354c912e7a7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3a04e16f18bdbfb15bd6b51a509a15a7f88a5b58")]
 [assembly: System.Reflection.AssemblyProductAttribute("Devalaya.Explorer.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Devalaya.Explorer.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
