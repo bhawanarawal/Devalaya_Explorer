@@ -12,35 +12,19 @@ namespace Devalaya.Explorer.Web.Controllers
 {
     public class LessonsController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
+        private readonly ApplicationDbContext db;
+        //Dependency Injection
         public LessonsController(ApplicationDbContext context)
         {
-            _context = context;
+            db = context;
         }
 
         // GET: Lessons
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IActionResult Index()
         {
-            return View(await _context.Lessons.ToListAsync());
-        }
-
-        // GET: Lessons/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var lesson = await _context.Lessons
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (lesson == null)
-            {
-                return NotFound();
-            }
-
-            return View(lesson);
+            var lessons = db.Lessons.ToList();//select * from lessons
+            return View(lessons);
         }
 
         // GET: Lessons/Create
@@ -58,8 +42,8 @@ namespace Devalaya.Explorer.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(lesson);
-                await _context.SaveChangesAsync();
+                db.Add(lesson);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(lesson);
@@ -73,7 +57,7 @@ namespace Devalaya.Explorer.Web.Controllers
                 return NotFound();
             }
 
-            var lesson = await _context.Lessons.FindAsync(id);
+            var lesson = await db.Lessons.FindAsync(id);
             if (lesson == null)
             {
                 return NotFound();
@@ -95,22 +79,8 @@ namespace Devalaya.Explorer.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(lesson);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LessonExists(lesson.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                db.Update(lesson);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(lesson);
@@ -124,7 +94,7 @@ namespace Devalaya.Explorer.Web.Controllers
                 return NotFound();
             }
 
-            var lesson = await _context.Lessons
+            var lesson = await db.Lessons
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (lesson == null)
             {
@@ -139,19 +109,14 @@ namespace Devalaya.Explorer.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var lesson = await _context.Lessons.FindAsync(id);
+            var lesson = await db.Lessons.FindAsync(id);
             if (lesson != null)
             {
-                _context.Lessons.Remove(lesson);
+                db.Lessons.Remove(lesson);
             }
 
-            await _context.SaveChangesAsync();
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool LessonExists(int id)
-        {
-            return _context.Lessons.Any(e => e.Id == id);
         }
     }
 }
