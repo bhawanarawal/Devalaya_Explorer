@@ -1,35 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Devalaya.Explorer.DataAccess;
 using Devalaya.Explorer.DataAccess.Entities;
-using Devalaya.Explorer.DataAccess;
+using Devalaya.Explorer.DataAccess.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Devalaya.Explorer.Web.Controllers
 {
     public class TemplesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ITemplesRepository templesRepository;
 
-        public TemplesController(ApplicationDbContext context)
+        public TemplesController(ITemplesRepository templesRepo)
         {
-            _context = context;
+            templesRepository = templesRepo;
         }
 
         // GET: Temples
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Temples.ToListAsync());
+            var temples = await templesRepository.GetAllTemplesAsync();
+            return View(temples);
         }
 
         // GET: Temples/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var temple = await _context.Temples
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var temple = await templesRepository.GetTempleByIdAsync(id);
+                
             if (temple == null)
             {
                 return NotFound();
@@ -53,22 +55,21 @@ namespace Devalaya.Explorer.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(temple);
-                await _context.SaveChangesAsync();
+                
                 return RedirectToAction(nameof(Index));
             }
             return View(temple);
         }
 
         // GET: Temples/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var temple = await _context.Temples.FindAsync(id);
+            var temple = await templesRepository.GetTempleByIdAsync(id);
             if (temple == null)
             {
                 return NotFound();
@@ -90,37 +91,23 @@ namespace Devalaya.Explorer.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(temple);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TempleExists(temple.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+               await templesRepository.UpdateTempleAsync(temple);
+
                 return RedirectToAction(nameof(Index));
             }
             return View(temple);
         }
 
         // GET: Temples/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var temple = await _context.Temples
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var temple = await templesRepository.GetTempleByIdAsync(id);
+
             if (temple == null)
             {
                 return NotFound();
@@ -134,19 +121,12 @@ namespace Devalaya.Explorer.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var temple = await _context.Temples.FindAsync(id);
+            var temple = await templesRepository.GetTempleByIdAsync(id);
             if (temple != null)
             {
-                _context.Temples.Remove(temple);
+                await templesRepository.DeleteTempleAsync(temple);
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool TempleExists(int id)
-        {
-            return _context.Temples.Any(e => e.Id == id);
         }
     }
 }

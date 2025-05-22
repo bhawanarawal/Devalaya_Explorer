@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Devalaya.Explorer.DataAccess.Entities;
 using Devalaya.Explorer.DataAccess;
+using Devalaya.Explorer.DataAccess.Repositories;
 
 namespace Devalaya.Explorer.API.Controllers
 {
@@ -9,25 +10,26 @@ namespace Devalaya.Explorer.API.Controllers
     [ApiController]
     public class TemplesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ITemplesRepository templesRepository;
 
-        public TemplesController(ApplicationDbContext context)
+        public TemplesController(ITemplesRepository templesRepo)
         {
-            _context = context;
+            templesRepository = templesRepo;
         }
 
         // GET: api/Temples
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Temple>>> GetTemples()
         {
-            return await _context.Temples.ToListAsync();
+          var temples= await templesRepository.GetAllTemplesAsync();
+            return Ok(temples);
         }
 
         // GET: api/Temples/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Temple>> GetTemple(int id)
         {
-            var temple = await _context.Temples.FindAsync(id);
+            var temple = await templesRepository.GetTempleByIdAsync(id);
 
             if (temple == null)
             {
@@ -46,24 +48,8 @@ namespace Devalaya.Explorer.API.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(temple).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TempleExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        
+           await templesRepository.UpdateTempleAsync(temple);
 
             return NoContent();
         }
@@ -73,8 +59,7 @@ namespace Devalaya.Explorer.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Temple>> PostTemple(Temple temple)
         {
-            _context.Temples.Add(temple);
-            await _context.SaveChangesAsync();
+           await templesRepository.AddTempleAsync(temple);
 
             return CreatedAtAction("GetTemple", new { id = temple.Id }, temple);
         }
@@ -83,21 +68,14 @@ namespace Devalaya.Explorer.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTemple(int id)
         {
-            var temple = await _context.Temples.FindAsync(id);
+            var temple = await templesRepository.GetTempleByIdAsync(id);
             if (temple == null)
             {
                 return NotFound();
             }
-
-            _context.Temples.Remove(temple);
-            await _context.SaveChangesAsync();
+            await templesRepository.DeleteTempleAsync(temple);
 
             return NoContent();
-        }
-
-        private bool TempleExists(int id)
-        {
-            return _context.Temples.Any(e => e.Id == id);
         }
     }
 }
