@@ -1,4 +1,4 @@
-using Devalaya.Explorer.Web.Data;
+using Devalaya.Explorer.DataAccess;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

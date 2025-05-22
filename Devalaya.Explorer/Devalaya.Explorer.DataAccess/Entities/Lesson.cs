@@ -1,4 +1,4 @@
-﻿namespace Devalaya.Explorer.Web.Data.Entities;
+﻿namespace Devalaya.Explorer.DataAccess.Entities;
 
 public class Lesson
 {
