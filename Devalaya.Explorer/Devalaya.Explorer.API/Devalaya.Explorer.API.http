@@ -1,0 +1,6 @@
+@Devalaya.Explorer.API_HostAddress = http://localhost:5187
+
+GET {{Devalaya.Explorer.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
