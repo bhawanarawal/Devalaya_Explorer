@@ -8,17 +8,17 @@ namespace Devalaya.Explorer.Web.Controllers
 {
     public class EventsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext db;
 
         public EventsController(ApplicationDbContext context)
         {
-            _context = context;
+            db = context;
         }
 
         // GET: Events
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Events.Include(x => x.Temple);
+            var applicationDbContext = db.Events.Include(x => x.Temple);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -30,7 +30,7 @@ namespace Devalaya.Explorer.Web.Controllers
                 return NotFound();
             }
 
-            var @event = await _context.Events
+            var @event = await db.Events
                 .Include(x => x.Temple)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@event == null)
@@ -44,7 +44,7 @@ namespace Devalaya.Explorer.Web.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
-            ViewData["TempleId"] = new SelectList(_context.Temples, "Id", "Name");
+            ViewData["TempleId"] = new SelectList(db.Temples, "Id", "Name");
             return View();
         }
 
@@ -57,11 +57,11 @@ namespace Devalaya.Explorer.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@event);
-                await _context.SaveChangesAsync();
+                db.Add(@event);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TempleId"] = new SelectList(_context.Temples, "Id", "Id", @event.TempleId);
+            ViewData["TempleId"] = new SelectList(db.Temples, "Id", "Id", @event.TempleId);
             return View(@event);
         }
 
@@ -73,12 +73,12 @@ namespace Devalaya.Explorer.Web.Controllers
                 return NotFound();
             }
 
-            var @event = await _context.Events.FindAsync(id);
+            var @event = await db.Events.FindAsync(id);
             if (@event == null)
             {
                 return NotFound();
             }
-            ViewData["TempleId"] = new SelectList(_context.Temples, "Id", "Id", @event.TempleId);
+            ViewData["TempleId"] = new SelectList(db.Temples, "Id", "Id", @event.TempleId);
             return View(@event);
         }
 
@@ -98,8 +98,8 @@ namespace Devalaya.Explorer.Web.Controllers
             {
                 try
                 {
-                    _context.Update(@event);
-                    await _context.SaveChangesAsync();
+                    db.Update(@event);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -114,7 +114,7 @@ namespace Devalaya.Explorer.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TempleId"] = new SelectList(_context.Temples, "Id", "Id", @event.TempleId);
+            ViewData["TempleId"] = new SelectList(db.Temples, "Id", "Id", @event.TempleId);
             return View(@event);
         }
 
@@ -126,7 +126,7 @@ namespace Devalaya.Explorer.Web.Controllers
                 return NotFound();
             }
 
-            var @event = await _context.Events
+            var @event = await db.Events
                 .Include(x => x.Temple)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (@event == null)
@@ -142,19 +142,19 @@ namespace Devalaya.Explorer.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            var @event = await db.Events.FindAsync(id);
             if (@event != null)
             {
-                _context.Events.Remove(@event);
+                db.Events.Remove(@event);
             }
 
-            await _context.SaveChangesAsync();
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EventExists(int id)
         {
-            return _context.Events.Any(e => e.Id == id);
+            return db.Events.Any(e => e.Id == id);
         }
     }
 }

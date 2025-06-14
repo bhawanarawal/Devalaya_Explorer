@@ -1,4 +1,5 @@
 using Devalaya.Explorer.DataAccess;
+using Devalaya.Explorer.DataAccess.Repositories;
 using Devalaya.Explorer.Web.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-
+builder.Services.AddScoped<ITemplesRepository, TemplesRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
