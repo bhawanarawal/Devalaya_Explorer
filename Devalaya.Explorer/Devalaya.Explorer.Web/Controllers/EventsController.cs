@@ -1,140 +1,78 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Devalaya.Explorer.DataAccess.Entities;
-using Devalaya.Explorer.DataAccess;
+﻿using Devalaya.Explorer.DataAccess.Entities;
+using Devalaya.Explorer.DataAccess.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Devalaya.Explorer.Web.Controllers
 {
     public class EventsController : Controller
     {
-        private readonly ApplicationDbContext db;
+        private readonly IEventsRepository _eventsRepository;
 
-        public EventsController(ApplicationDbContext context)
+        public EventsController(IEventsRepository eventsRepo)
         {
-            db = context;
+            _eventsRepository = eventsRepo;
         }
 
         // GET: Events
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = db.Events.Include(x => x.Temple);
-            return View(await applicationDbContext.ToListAsync());
+            var events = await _eventsRepository.GetAllEventsAsync();
+            return View(events);
         }
 
         // GET: Events/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var @event = await db.Events
-                .Include(x => x.Temple)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-
-            return View(@event);
+            var eventItem = await _eventsRepository.GetEventByIdAsync(id);
+            return eventItem == null ? NotFound() : View(eventItem);
         }
 
         // GET: Events/Create
         public IActionResult Create()
         {
-            ViewData["TempleId"] = new SelectList(db.Temples, "Id", "Name");
             return View();
         }
 
         // POST: Events/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Details,EventDate,Contact,TempleId")] Event @event)
+        public async Task<IActionResult> Create([Bind("Id,Name,Details,Address,Deity,MadeYear")] Event newEvent)
         {
             if (ModelState.IsValid)
             {
-                db.Add(@event);
-                await db.SaveChangesAsync();
+                await _eventsRepository.AddEventAsync(newEvent);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TempleId"] = new SelectList(db.Temples, "Id", "Id", @event.TempleId);
-            return View(@event);
+            return View(newEvent);
         }
 
         // GET: Events/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var @event = await db.Events.FindAsync(id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-            ViewData["TempleId"] = new SelectList(db.Temples, "Id", "Id", @event.TempleId);
-            return View(@event);
+            var eventItem = await _eventsRepository.GetEventByIdAsync(id);
+            return eventItem == null ? NotFound() : View(eventItem);
         }
 
         // POST: Events/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Details,EventDate,Contact,TempleId")] Event @event)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Details,EventDate,Conatct")] Event updatedEvent)
         {
-            if (id != @event.Id)
-            {
-                return NotFound();
-            }
+            if (id != updatedEvent.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    db.Update(@event);
-                    await db.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EventExists(@event.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _eventsRepository.UpdateEventAsync(updatedEvent);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TempleId"] = new SelectList(db.Temples, "Id", "Id", @event.TempleId);
-            return View(@event);
+            return View(updatedEvent);
         }
 
         // GET: Events/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var @event = await db.Events
-                .Include(x => x.Temple)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-
-            return View(@event);
+            var eventItem = await _eventsRepository.GetEventByIdAsync(id);
+            return eventItem == null ? NotFound() : View(eventItem);
         }
 
         // POST: Events/Delete/5
@@ -142,19 +80,13 @@ namespace Devalaya.Explorer.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var @event = await db.Events.FindAsync(id);
-            if (@event != null)
+            var eventItem = await _eventsRepository.GetEventByIdAsync(id);
+            if (eventItem != null)
             {
-                db.Events.Remove(@event);
+                await _eventsRepository.DeleteEventAsync(eventItem);
+                return RedirectToAction(nameof(Index));
             }
-
-            await db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool EventExists(int id)
-        {
-            return db.Events.Any(e => e.Id == id);
+            return View(eventItem);
         }
     }
 }
