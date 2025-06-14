@@ -18,7 +18,11 @@ namespace Devalaya.Explorer.Web.Controllers
             var temples = await _templesRepository.GetAllTemplesAsync();
             return View(temples);
         }
-
+        public async Task<IActionResult> UserIndex()
+        {
+            var temples = await _templesRepository.GetAllTemplesAsync();
+            return View(temples);
+        }
         public async Task<IActionResult> Details(int id)
         {
             if (id == null) return NotFound();

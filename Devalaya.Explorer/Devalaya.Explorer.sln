@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devalaya.Explorer.API", "De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devalaya.Explorer.DataAccess", "Devalaya.Explorer.DataAccess\Devalaya.Explorer.DataAccess.csproj", "{ED4C7997-013C-4DD4-84B0-A1B4A1D98347}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devalaya.Explorer.ChatBot", "Devalaya.Explorer.ChatBot\Devalaya.Explorer.ChatBot.csproj", "{4CE2AC49-0C44-40D4-073A-FD1E737F83C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{ED4C7997-013C-4DD4-84B0-A1B4A1D98347}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED4C7997-013C-4DD4-84B0-A1B4A1D98347}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED4C7997-013C-4DD4-84B0-A1B4A1D98347}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CE2AC49-0C44-40D4-073A-FD1E737F83C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE2AC49-0C44-40D4-073A-FD1E737F83C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE2AC49-0C44-40D4-073A-FD1E737F83C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CE2AC49-0C44-40D4-073A-FD1E737F83C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

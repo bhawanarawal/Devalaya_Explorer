@@ -1,0 +1,129 @@
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: #f4f4f9;
+}
+.about-us{
+    text-align: center;
+    margin: 5px 0;
+    font-family: bold;
+}
+.overlay-text {
+    position: absolute;
+    top: 35%; 
+    left: 50%; 
+    transform: translate(-50%, -120%);  
+    color: #fff; 
+    padding: 40px 40px; 
+    font-size: 80px; 
+    text-align: center;
+  }
+.image img{
+    width:100%;
+    height: 50vh; 
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+.about-us h3 {
+    font-size: 1.5rem;
+    color: #555;
+}
+
+.about-section {
+    padding: 5px 10px;
+    background-color: #f7f7f7;
+}
+.about-section h2{
+    color: red;
+}
+
+.values-section {
+    padding: 5px 10px;
+    background-color: #e9ecef;
+    border-radius: 15px;
+    margin-top: 8px;
+}
+
+.values-section h3 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    color:red;
+}
+
+.values-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.values-item {
+    flex: 0 0 30%;
+    min-width: 250px;
+    margin-bottom: 30px;
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.values-item:hover {
+    transform: scale(1.05);
+}
+
+.values-item i {
+    font-size: 2rem;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+
+.testimonials-section {
+    background-color: #f7f7f7;
+    padding: 10px 10px;
+    margin-top: 10px;
+    border-radius: 15px;
+}
+
+.testimonials-section h3 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+    color: red;
+}
+
+.testimonial-item {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.testimonial-item p {
+    color: black;
+    font-style: italic;
+    font-family: bold;
+    font-size: 1.3rem;
+}
+
+   
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+    font-size: 1.1rem;
+    padding: 15px 30px;
+    margin-top: 30px;
+    border-radius: 5px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .values-item {
+        flex: 1 1 100%;
+    }
+}

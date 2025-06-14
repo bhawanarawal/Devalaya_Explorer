@@ -1,0 +1,168 @@
+footer {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background: #fff;
+    border-top: 2px solid grey;
+    margin-top: 2rem;
+
+}
+
+footer .container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 0.5fr 2.5fr 1fr 1fr;
+    grid-gap: 20px;
+}
+
+footer .container .sec h3 {
+    position: relative;
+    color: black;
+    font-weight: 600;
+    margin-bottom: 15px;
+    font-size: 20px;
+    margin-top: 1rem;
+
+}
+footer .container .sec .contact_heading h3 {
+    position: relative;
+    color: black;
+    font-weight: 600;
+    margin-bottom: 15px;
+    font-size: 20px;
+    margin-top: 1rem;
+    margin-left: 2rem;
+
+}
+footer .container .sec .contact_headings h3 {
+    position: relative;
+    color: black;
+    font-weight: 600;
+    margin-bottom: 15px;
+    font-size: 20px;
+    margin-top: 1rem;
+    margin-left: 1.5rem;
+
+}
+.footer-image img{
+    width: 120%;
+    height: 80%;
+}
+
+footer .container .sec p {
+    color: black;
+}
+
+footer .container .sci {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 50px);
+
+}
+
+footer .container .sci li {
+    list-style: none;
+}
+
+footer .container .sci li a {
+    display: inline-block;
+    width: 70px;
+    height: 36px;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+footer .container .sci li a i {
+    color: #fff;
+
+}
+
+footer .cotainer .quicklinks {
+    position: relative;
+}
+
+footer .container .quicklinks ul li {
+    list-style: none;
+}
+
+footer .container .quicklinks ul li a {
+    color: black;
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+footer .container .quicklinks ul li a:hover {
+    color: blue;
+}
+
+footer .container .contact .info {
+    position: absolute;
+
+}
+
+footer .container .contact .info li {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    margin-bottom: 16px;
+
+}
+
+footer .container .contact .info li span {
+    color: black;
+    text-decoration: none;
+
+}
+
+footer .container .contact .info li span:hover {
+    color: blue;
+
+}
+
+footer .container .contact .info li a {
+    color: black;
+    text-decoration: none;
+
+}
+
+footer .container .contact .info li a:hover {
+    color: blue;
+}
+
+.copyright {
+    width: 100%;
+    background: #fff;
+    text-align: center;
+    color: #555;
+    padding-bottom: 1rem;
+    border-top: 2px solid grey;
+}
+
+@media (max-width:991) {
+    footer {
+        padding: 40px;
+
+    }
+
+    footer .container {
+        width: 100px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+    }
+
+    .copyright {
+        padding: 20px 40px 30px;
+    }
+}
+
+@media(max-width:768px) {
+    footer .container {
+        width: 100px;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 20px;
+    }
+}

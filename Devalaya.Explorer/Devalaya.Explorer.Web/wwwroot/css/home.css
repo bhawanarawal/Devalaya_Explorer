@@ -1,0 +1,513 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: Georgia;
+}
+
+
+.navbar {
+  background-color: white;
+  padding-bottom: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
+  border-bottom: 3px solid red;
+
+}
+.nav-item a{
+  color:black;
+}
+
+section {
+  width: 100%;
+  height: auto;
+}
+
+html::-webkit-scrollbar {
+  width: 1rem;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: white;
+
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: red;
+}
+
+.navbar-brand span {
+  transition: 0.3px color;
+  font-size: 25px;
+  color: red;
+}
+
+.navbar-brand img {
+  width: 80px;
+  height: 40px;
+}
+
+.login {
+  color: red;
+  font-size: 16px;
+  padding: 9px 15px;
+  text-decoration: none;
+  transition: 0.3s background-color;
+}
+
+.login:hover {
+  color: black;
+}
+
+.navbar-toggler {
+  border: none;
+  font-size: 1.25rem;
+}
+
+.navbar-toggler:focus,
+.btn-close:focus {
+  box-shadow: none;
+  outline: none;
+
+}
+
+.nav-link {
+  color: black;
+  font-weight: 500;
+  position: relative;
+  font-size: 1.15rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: red;
+}
+
+@media (min-width:991px) {
+  .nav-link::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translatex(-50%);
+    width: 0;
+    height: 2px;
+    background-color: red;
+    visibility: hidden;
+    transition: 0.3s ease-in-out;
+  }
+
+  .nav-link:hover::before,
+  .nav-link.active::before {
+    width: 100%;
+    visibility: visible;
+  }
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(1, 1);
+  }
+
+  to {
+    transform: scale(1.2, 1.2);
+  }
+}
+
+html,
+body {
+  height: 77vh;
+}
+
+.carousel,
+.carousel-item,
+.active {
+  height: 100%;
+
+}
+
+.carousel-inner {
+  height: 100%;
+  background: #000;
+}
+
+/* .carousel-caption{
+    padding-right:25%;
+    padding-bottom: 15%;
+  } */
+@keyframes fadeIn {
+  0% {
+    transform: scale(0);
+    opacity: 0%;
+  }
+}
+
+.carousel-caption h1 {
+
+  font-size: 3.5vw;
+  color: white;
+  text-transform: uppercase;
+  animation: fadeIn 2s linear backwards .1s;
+  
+}
+
+.carousel-caption p {
+  font-size: 3.3vw;
+  color: white;
+  animation: fadeIn 2s linear backwards .2s;
+  padding-bottom: 8rem;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 95vh;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.35;
+}
+
+.carousel-inner .carousel-item>img {
+  animation: zoom 25s;
+}
+
+.temples-header h1 {
+  font-size: 28px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+  color: #007bff;
+}
+
+.temples-header h3 {
+  font-size: 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+  color: red;
+  margin-top: 1rem;
+}
+
+.section-about {
+  position: relative;
+  max-width: 95%;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+margin-left: 2.5rem;
+}
+
+.section-about h1 {
+    color: #007bff;
+  font-size: 28px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+  margin-bottom: 1rem;
+  box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.4);
+}
+.section-about h3 {
+  font-size: 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+  margin-top: 1rem;
+  color: red;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.3);
+  padding-top: 1rem;
+}
+
+.section-events h3 {
+  font-size: 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+  margin-top: 2rem;
+  color: red;
+}
+
+.section-events h1 {
+  font-size: 28px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #007bff;
+}
+
+.bottom-div img {
+  position: relative;
+  width: 380px;
+  height: 350px;
+  margin-left: 80px;
+  z-index: 100;
+}
+
+.text .btn {
+  background-color: white;
+  color: black;
+  margin-left: 2rem;
+  background-color: dodgerblue;
+  color: white;
+  width: 25%;
+  font-size: 1rem;
+  border: 1px solid black;
+}
+
+.text {
+  position: absolute;
+  left: 550px;
+  top: 25px;
+  margin-top: 1rem;
+  padding-top: 2rem;
+}
+
+.text h2 {
+  font-size: 22px;
+  color: black;
+  margin-left: 2rem;
+  margin-top: 2rem;
+}
+
+.text p {
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
+}
+
+.text h4 {
+  font-size: 20px;
+  color: grey;
+  margin-left: 2rem;
+  margin-top: 1rem;
+}
+
+#carouselMultiItemExample .container {
+  max-width: 1370px;
+}
+
+#carouselMultiItemExample .card img {
+  height: 150px;
+  opacity: 1;
+}
+
+#carouselMultiItemExample .card-body {
+  height: 150px;
+  border: 1px solid black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.card-body .btn {
+  color: black;
+  border: 1px solid black;
+}
+.card-body .btn:hover {
+  background-color: dodgerblue;
+  color: white;
+}
+
+#carouselMultiItemExample .carousel-inner {
+  background-color: white;
+}
+
+
+.carousel-item .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom:1rem;
+  width: 320px;
+ 
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.card-text {
+  font-size: 1rem;
+  margin-bottom: 0;
+  color: #555;
+}
+
+.btn-light {
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-transform:lowercase;
+}
+
+.btn-light:hover {
+  background-color: #0056b3;
+  color: #f8f9fa;
+}
+
+.btn-primary {
+  color: white;
+  padding: 12px 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.btn-primary:hover {
+  background-color: #d15546;
+}
+
+@media (max-width: 768px) {
+  .carousel-item .col-lg-4 {
+    flex: 1 1 45%;
+    margin-bottom: 20px;
+  }
+}
+.temple-button .btn {
+  width: 20%;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: dodgerblue;
+  color: white;
+}
+
+
+
+
+
+
+
+
+
+.two-column-list {
+  -moz-column-count: 2;
+  -moz-column-gap: 15px;
+  -webkit-column-count: 2;
+  -webkit-column-gap: 10px;
+  column-count: 2;
+  column-gap: 4px;
+}
+
+.eventsslider-container {
+  position: relative;
+  width: 95%;
+  margin: auto;
+  overflow: hidden;
+
+}
+
+.eventsslider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 900px;
+  gap: 1rem;
+
+}
+
+.eventsslider .eventscard-body .btn {
+border: 1px solid black;
+  color: black;
+
+}
+.eventsslider .eventscard-body .btn:hover {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.eventscard {
+  flex: 0 0 45%;
+  /* Each card takes 30% of the slider width */
+  margin-right: 15px;
+  /* Space between cards */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s ease;
+  border-radius: 8px;
+  background: #fff;
+  
+  border: 1px solid black;
+  height: 350px;
+  margin-bottom: 2rem;
+
+}
+.eventscard:hover{
+  transform: scale(1.05);
+}
+.eventscard-body h5{
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+.eventscard-body h2{
+  font-size: 1rem;
+  color: red;
+}
+.eventscard-title i .fa-calendar-days{
+  color: black;
+}
+.eventscard-body p{
+  font-size: 1rem;
+ text-align: justify;
+padding-left: 1rem;
+padding-right: 1rem;
+padding-top: 1rem;
+ 
+}
+.eventscard-body h4{
+  font-size: 1rem;
+
+}
+
+.eventscard-body {
+  padding: 2px;
+  text-align: center;
+  
+}
+
+.prev-btn,
+.next-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: dodgerblue;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+  background-color: dodgerblue;
+}
+.logout {
+  color: red;
+  margin-top: .5rem;
+}
+.username{
+ color:red;
+margin-top: .5rem;
+margin-right:1rem;
+text-transform: capitalize;
+
+}
