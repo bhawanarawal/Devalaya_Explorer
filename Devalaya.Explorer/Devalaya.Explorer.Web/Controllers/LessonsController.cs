@@ -1,25 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Devalaya.Explorer.DataAccess.Entities;
-using Devalaya.Explorer.DataAccess;
+﻿using Devalaya.Explorer.DataAccess.Entities;
+using Devalaya.Explorer.DataAccess.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Devalaya.Explorer.Web.Controllers
 {
     public class LessonsController : Controller
     {
-        private readonly ApplicationDbContext db;
-        //Dependency Injection
-        public LessonsController(ApplicationDbContext context)
+        private readonly ILessonsRepository _lessonsRepository;
+
+        public LessonsController(ILessonsRepository lessonsRepo)
         {
-            db = context;
+            _lessonsRepository = lessonsRepo;
         }
 
         // GET: Lessons
-        [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var lessons = db.Lessons.ToList();//select * from lessons
+            var lessons = await _lessonsRepository.GetAllLessonsAsync();
             return View(lessons);
+        }
+
+        // GET: Lessons/Details/5
+        public async Task<IActionResult> Details(int id)
+        {
+            var lessonItem = await _lessonsRepository.GetLessonByIdAsync(id);
+            return lessonItem == null ? NotFound() : View(lessonItem);
         }
 
         // GET: Lessons/Create
@@ -29,74 +34,45 @@ namespace Devalaya.Explorer.Web.Controllers
         }
 
         // POST: Lessons/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Quote,Source")] Lesson lesson)
+        public async Task<IActionResult> Create([Bind("Id,Quote,Source")] Lesson newLesson)
         {
             if (ModelState.IsValid)
             {
-                db.Add(lesson);
-                await db.SaveChangesAsync();
+                await _lessonsRepository.AddLessonAsync(newLesson);
                 return RedirectToAction(nameof(Index));
             }
-            return View(lesson);
+            return View(newLesson);
         }
 
         // GET: Lessons/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var lesson = await db.Lessons.FindAsync(id);
-            if (lesson == null)
-            {
-                return NotFound();
-            }
-            return View(lesson);
+            var lessonItem = await _lessonsRepository.GetLessonByIdAsync(id);
+            return lessonItem == null ? NotFound() : View(lessonItem);
         }
 
         // POST: Lessons/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Quote,Source")] Lesson lesson)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Quote,Source")] Lesson updatedLesson)
         {
-            if (id != lesson.Id)
-            {
-                return NotFound();
-            }
+            if (id != updatedLesson.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
-                db.Update(lesson);
-                await db.SaveChangesAsync();
+                await _lessonsRepository.UpdateLessonAsync(updatedLesson);
                 return RedirectToAction(nameof(Index));
             }
-            return View(lesson);
+            return View(updatedLesson);
         }
 
         // GET: Lessons/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var lesson = await db.Lessons
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (lesson == null)
-            {
-                return NotFound();
-            }
-
-            return View(lesson);
+            var lessonItem = await _lessonsRepository.GetLessonByIdAsync(id);
+            return lessonItem == null ? NotFound() : View(lessonItem);
         }
 
         // POST: Lessons/Delete/5
@@ -104,14 +80,16 @@ namespace Devalaya.Explorer.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var lesson = await db.Lessons.FindAsync(id);
-            if (lesson != null)
+            var lessonItem = await _lessonsRepository.GetLessonByIdAsync(id);
+
+            if (lessonItem == null)
             {
-                db.Lessons.Remove(lesson);
+                return NotFound();
             }
 
-            await db.SaveChangesAsync();
+            await _lessonsRepository.DeleteLessonAsync(lessonItem);
             return RedirectToAction(nameof(Index));
         }
+
     }
 }
