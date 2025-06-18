@@ -7,9 +7,13 @@ using OllamaSharp;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
-IChatClient chatClient = new OllamaApiClient(new Uri("http://localhost:11434"),
+
+IChatClient chatClient = new OllamaApiClient(
+    new Uri("http://localhost:11434"),
     "llama3.2");
-IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator = new OllamaApiClient(new Uri("http://localhost:11434"),
+
+IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator = new OllamaApiClient(
+    new Uri("http://localhost:11434"),
     "all-minilm");
 
 var vectorStorePath = Path.Combine(AppContext.BaseDirectory, "vector-store.db");

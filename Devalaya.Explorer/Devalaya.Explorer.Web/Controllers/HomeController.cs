@@ -12,4 +12,8 @@ public class HomeController : Controller
     {
         return View();
     }
+    public IActionResult ChatBot()
+    {
+        return View();
+    }
 }

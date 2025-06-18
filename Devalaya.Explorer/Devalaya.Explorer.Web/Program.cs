@@ -1,5 +1,6 @@
 using Devalaya.Explorer.DataAccess;
 using Devalaya.Explorer.DataAccess.Repositories;
+using Devalaya.Explorer.Web.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,7 @@ builder.Services.AddScoped<ILessonsRepository, LessonsRepository>();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 
 
 
@@ -40,5 +42,7 @@ app.MapStaticAssets();
 app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 app.MapRazorPages().WithStaticAssets();
+app.MapHub<OllamaHub>("/ollamaHub");
+    
 
 app.Run();
