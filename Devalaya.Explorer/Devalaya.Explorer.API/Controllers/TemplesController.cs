@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Devalaya.Explorer.DataAccess.Entities;
 using Devalaya.Explorer.DataAccess;
 using Devalaya.Explorer.DataAccess.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Devalaya.Explorer.API.Controllers
 {
@@ -21,7 +23,7 @@ namespace Devalaya.Explorer.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Temple>>> GetTemples()
         {
-          var temples= await templesRepository.GetAllTemplesAsync();
+          var temples= await templesRepository.GetTemplesAsync();
             return Ok(temples);
         }
 
@@ -52,6 +54,13 @@ namespace Devalaya.Explorer.API.Controllers
            await templesRepository.UpdateTempleAsync(temple);
 
             return NoContent();
+        }
+
+        [HttpGet("throw")]
+        public IActionResult ThrowException()
+        {
+            
+            throw new Exception("This is a test exception!");
         }
 
         // POST: api/Temples
