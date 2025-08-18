@@ -1,16 +1,12 @@
 ﻿using Devalaya.Explorer.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Devalaya.Explorer.DataAccess.Repositories;
 public interface ITemplesRepository
 {
-    Task<IEnumerable<Temple>> GetAllTemplesAsync();
-    Task<Temple> GetTempleByIdAsync(int id);
+    Task<IEnumerable<Temple>> GetTemplesAsync(int count = 0);
+    Task<Temple?> GetTempleByIdAsync(int id);
+    Task<Temple?> GetTempleBySlugAsync(string slug);
     Task AddTempleAsync(Temple temple);
     Task UpdateTempleAsync(Temple temple);
     Task DeleteTempleAsync(Temple temple);
@@ -35,18 +31,25 @@ public class TemplesRepository : ITemplesRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Temple>> GetAllTemplesAsync()
+    public async Task<IEnumerable<Temple>> GetTemplesAsync(int count = 0)
     {
+        if (count != 0)
+        {
+            return await _context.Temples.Take(count).ToListAsync();
+        }
         return await _context.Temples.ToListAsync();
     }
 
-    public async Task<Temple> GetTempleByIdAsync(int id)
+    public async Task<Temple?> GetTempleByIdAsync(int id)
     {
 
-        var temple =  await _context.Temples.FindAsync(id);
+        var temple = await _context.Temples.FindAsync(id);
         return temple;
     }
-
+    public async Task<Temple?> GetTempleBySlugAsync(string slug)
+    {
+        return await _context.Temples.FirstOrDefaultAsync(t => t.Slug == slug);
+    }
     public async Task UpdateTempleAsync(Temple temple)
     {
         _context.Update(temple);

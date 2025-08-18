@@ -1,6 +1,6 @@
 ﻿namespace Devalaya.Explorer.DataAccess.Entities;
 
-public class Event
+public class Event:BaseModel
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;

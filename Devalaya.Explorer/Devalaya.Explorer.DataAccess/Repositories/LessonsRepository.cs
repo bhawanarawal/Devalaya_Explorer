@@ -8,7 +8,7 @@ namespace Devalaya.Explorer.DataAccess.Repositories
     public interface ILessonsRepository
     {
         Task<IEnumerable<Lesson>> GetAllLessonsAsync();
-        Task<Event> GetLessonByIdAsync(int id);
+        Task<Lesson> GetLessonByIdAsync(int id);
         Task AddLessonAsync(Lesson newLesson);
         Task UpdateLessonAsync(Lesson updatedLesson);
         Task DeleteLessonAsync(Lesson deleteLesson);
@@ -60,11 +60,6 @@ namespace Devalaya.Explorer.DataAccess.Repositories
         {
             _context.Update(updatedLesson);
             await _context.SaveChangesAsync();
-        }
-
-        Task<Event> ILessonsRepository.GetLessonByIdAsync(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }
