@@ -1,12 +1,21 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.AI;
+using OllamaSharp;
 
-namespace Devalaya.Explorer.Web.Hubs;
-
-public class OllamaHub: Hub
+namespace Devalaya.Explorer.Web.Hubs
 {
-    public async Task OllamaResponse(string message)
+    public class OllamaHub : Hub
     {
-        // Broadcast the message to all connected clients
-        await Clients.All.SendAsync("ReceiveOllamaResponse", message);
+        public async Task SendOllamaRequest(string message)
+        {
+            IChatClient chatClient = new OllamaApiClient(new Uri("http://localhost:11434"), "phi3:mini");
+            List<ChatMessage> chatHistory = new() { new ChatMessage(ChatRole.User, message) };
+
+           
+            await foreach (var item in chatClient.GetStreamingResponseAsync(chatHistory))
+            {
+                await Clients.Caller.SendAsync("ReceiveOllamaResponse", item.Text);
+            }
+        }
     }
 }

@@ -3,56 +3,34 @@
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
-<section class="alltemples-header">
-    <h1><b><i class="fa-solid fa-om"></i>Temples<i class="fa-solid fa-om"></i></b></h1>
-    <!-- Carousel wrapper -->
-    <div id="carouselMultiItemExample"
-         data-mdb-carousel-init class="carousel slide carousel-dark text-center"
-         data-mdb-ride="carousel">
-        <div class="carousel-inner py-4">
-            <!-- Single item -->
-            <div class="carousel-item active">
-                <div class="container">
-                    <div class="row" id="templesContainer">
-                        <?php
-                        $i = 0;
-                        foreach ($data as $row) {
-                        $i++;
-                        $sql = "select * from gallery where temple_id = " . $row['id'] . " limit 1";
-                        $res = $con->query($sql);
-                        $img = $res->fetch_assoc();
 
-                        // Add the "hidden-row" class to rows beyond the first 2
-                        $hiddenClass = ($i > 8) ? 'hidden-row' : '';
-                        ?>
-                        <div class="col-lg-3 <?php echo $hiddenClass; ?>">
-                            <div class="card">
-                                <img src="admin/<?php echo $img['image_path']; ?>"
-                                     class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title"><b><?php echo $row["name"]; ?></b></h5>
-                                    <p class="card-text">
-                                        Deity :<?php echo substr($row["deity"], 0, 20) . ".."; ?>
-                                    </p>
-                                    <div class="class">
-                                        <form action="alltemple.php" method="POST" name="like">
-                                            <input type="hidden" name="templeid" value="<?php echo $row[" id"]; ?>" />
-                                            <button type="submit" name="like">❤</button>
-                                        </form>
-                                        <div class="classbutton">
-                                            <a href='temples.php?id=<?php echo $row["id"]; ?>' data-mdb-ripple-init class='btn btn-light'>See More</a>
-                                        </div>
-                                    </div>
-                                </div>
+<section class="alltemples-header text-center">
+    <h1><b><i class="fa-solid fa-om"></i> Temples <i class="fa-solid fa-om"></i></b></h1>
+
+    <div class="container mt-4">
+        <div class="row" id="templesContainer">
+            @foreach (var temple in Model)
+            {
+                <div class="col-lg-3 mb-4 temple-card">
+                    <div class="card h-100">
+                        <img src="/images/home-3.webp" class="card-img-top" alt="Temple Image">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title"><b>@temple.Name</b></h5>
+                            <p class="card-text">Deity: @temple.Deity</p>
+                            <div class="mt-auto d-flex justify-content-between">
+                                <button class="btn btn-outline-danger">❤</button>
+                                <a asp-controller="Temples" asp-action="Details" asp-route-slug="@temple.Slug" class="btn btn-light">
+                                    See More
+                                </a>
                             </div>
                         </div>
-                        <?php } ?>
-                    </div>
-                    <div class="temple-button">
-                        <a href="javascript:void(0);" id="loadMoreBtn" data-mdb-ripple-init class="btn btn-primary">Load More</a>
                     </div>
                 </div>
-            </div>
+            }
+        </div>
+
+        <div class="text-center mt-4">
+            <button id="loadMoreBtn" class="btn btn-primary">Load More</button>
         </div>
     </div>
 </section>

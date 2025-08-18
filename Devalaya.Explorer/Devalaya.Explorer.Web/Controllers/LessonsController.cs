@@ -16,7 +16,9 @@ namespace Devalaya.Explorer.Web.Controllers
         // GET: Lessons
         public async Task<IActionResult> Index()
         {
+
             var lessons = await _lessonsRepository.GetAllLessonsAsync();
+
             return View(lessons);
         }
 
@@ -31,6 +33,11 @@ namespace Devalaya.Explorer.Web.Controllers
         public IActionResult Create()
         {
             return View();
+        }
+        public async Task<IActionResult> UserIndex()
+        {
+            var lessons = await _lessonsRepository.GetAllLessonsAsync();
+            return View(lessons);
         }
 
         // POST: Lessons/Create

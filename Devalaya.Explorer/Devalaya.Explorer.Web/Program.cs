@@ -1,6 +1,7 @@
 using Devalaya.Explorer.DataAccess;
 using Devalaya.Explorer.DataAccess.Repositories;
 using Devalaya.Explorer.Web.Hubs;
+using Devalaya.Explorer.Web.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,8 +20,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
-
-
+builder.Services.Configure<OllamaSettings>(builder.Configuration.GetSection("OllamaSettings"));
 
 var app = builder.Build();
 

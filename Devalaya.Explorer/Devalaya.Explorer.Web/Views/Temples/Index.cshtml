@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                Image
+            </th>
+            <th>
                 Name
             </th>
             <th>
@@ -34,6 +37,10 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    <img src="@item.ImagePath" width="40" />
+                    
+                </td>
                 <td>
                     @item.Name
                 </td>

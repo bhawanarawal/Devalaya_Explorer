@@ -6,137 +6,73 @@
 }
 
 <!-- Bootstrap CSS and Icons -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-<div class="chat-interface d-flex h-100 bg-dark text-white">
-    <button class="btn btn-outline-light position-absolute top-0 start-0 m-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse" aria-expanded="false" aria-controls="sidebarCollapse">
-        <i class="bi bi-list"></i>
-    </button>
-    <div class="collapse" id="sidebarCollapse">
-        <div class="sidebar bg-dark p-2" style="width: 180px;">
-            <h5 class="mb-3 border-bottom border-secondary pb-1"><i class="bi bi-grid-1x2"></i>ChatBot</h5>
-            <ul class="list-unstyled">
-                <li class="mb-2"><a href="#" class="text-light text-decoration-none d-flex align-items-center" onclick="handleExample('AI')"><i class="bi bi-lightbulb me-1"></i> AI</a></li>
-                <li class="mb-2"><a href="#" class="text-light text-decoration-none d-flex align-items-center" onclick="handleExample('Data')"><i class="bi bi-graph-up me-1"></i> Data</a></li>
-                <li class="mb-2"><a href="#" class="text-light text-decoration-none d-flex align-items-center" onclick="handleExample('Doc')"><i class="bi bi-file-text me-1"></i> Doc</a></li>
-            </ul>
+<div class="container d-flex justify-content-around align-items-center min-vh-100 bg-white border-black">
+    <div class="card p-4" style="width: 600px; max-height: 100vh; overflow: hidden;">
+        <h2 class="mb-2 text-center text-primary">==Devalaya ChatBot==</h2>
+        <p class="text-center mb-2">I’m here to help.Chat or Explore!</p>
+
+        <div class="chat-area bg-light p-3 mb-3 overflow-auto" style="height: 300px;" id="outputBox">
+           
         </div>
-    </div>
-    <div class="chat-content flex-grow-1 p-3">
-        <h2 class="mb-2"> ChatBot</h2>
-        <p class="mb-2">I’m here to help. Chat or explore!</p>
-        <div class="chat-area bg-secondary p-2 mb-3" style="height: 200px; overflow-y: auto;" id="outputBox">
-            <!-- Chat responses will appear here -->
+
+        <div class="input-group">
+            <input type="text" id="inputBox" class="form-control border-primary" placeholder="Your message" />
+            <button type="button" class="btn btn-primary-px-3 border-primary" onclick="sendMessage()">
+                <i class="bi bi-send"></i> 
+            </button>
         </div>
-        <div class="input-section d-flex gap-1 align-items-center">
-            <div class="input-group flex-grow-1 me-1">
-                <input type="text" id="inputBox" class="form-control bg-dark text-white border-secondary" placeholder="Your message" style="font-size: 0.9em; padding: 0.2rem;" />
-                <button type="button" class="btn btn-outline-light" style="padding: 0.2rem 0.6rem;" onclick="sendMessage()"><i class="bi bi-send-fill"></i></button>
-            </div>
-            <input type="file" id="fileUpload" class="form-control bg-dark text-white border-secondary" placeholder="Attachment file" accept=".txt,.pdf,.jpg,.png" style="font-size: 0.9em; padding: 0.4rem;" />
-            <button type="button" class="btn btn-outline-light" style="padding: 0.4rem 0.6rem;" onclick="clearChat()"><i class="bi bi-trash-fill"></i></button>
-            <button type="button" class="btn btn-outline-light" id="thinkBtn" style="padding: 0.4rem 0.6rem;" onclick="toggleThinkMode()"><i class="bi bi-bulb-fill glow"></i></button>
-            <button type="button" class="btn btn-outline-light" style="padding: 0.4rem 0.6rem;" onclick="toggleTheme()"><i class="bi bi-palette"></i></button>
+
+        <div class="d-flex gap-2 mb-2">
+            <input type="file" id="fileUpload" class="form-control" accept=".txt,.pdf,.jpg,.png" />
         </div>
+
+       
     </div>
 </div>
 
-<style>
-    .glow {
-        animation: glow 1.5s ease-in-out infinite alternate;
-    }
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
- 
-</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+<script>
+        var connection = new signalR.HubConnectionBuilder()
+        .withUrl("/ollamaHub")
+        .build();
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+       
+            connection.on("ReceiveOllamaResponse", function (message) {
+        document.getElementById("outputBox").innerText += message;
+    });
 
-@section Scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-    <script>
-        var connection =new signalR.HubConnectionBuilder()
-            .withUrl("/ollamaHub")
-            .build();
-                connection.on("ReceiveOllamaResponse", function (message) {
-            document.getElementById("outputBox").innerText += message;
-        });
 
-               connection.start().then(() => {
-            console.log("Connected to SignalR");
-        });
-        let isThinking = false;
 
-        function handleExample(action) {
-            const outputBox = document.getElementById('outputBox');
-            const time = new Date().toLocaleTimeString();
-            outputBox.innerHTML += `<p class="mb-1"><strong>AI:</strong> ${action}... <small class="text-secondary">(${time})</small></p>`;
-            outputBox.scrollTop = outputBox.scrollHeight;
-        }
+        connection.start().then(() => {
+        console.log("Connected to SignalR");
+    });
 
         function sendMessage() {
-            const input = document.getElementById('inputBox').value;
-            const fileInput = document.getElementById('fileUpload');
-            const outputBox = document.getElementById('outputBox');
-            const time = new Date().toLocaleTimeString();
+        const inputBox = document.getElementById('inputBox');
+        const message = inputBox.value.trim();
+        const outputBox = document.getElementById('outputBox');
+        const time = new Date().toLocaleTimeString();
 
-            if (input || fileInput.files.length > 0) {
-                if (input) {
-                    outputBox.innerHTML += `<p class="mb-1"><strong>You:</strong> ${input} <small class="text-secondary">(${time})</small></p>`;
-                }
-                if (fileInput.files.length > 0) {
-                    const fileName = fileInput.files[0].name;
-                    outputBox.innerHTML += `<p class="mb-1"><strong>You:</strong> Attached ${fileName} <small class="text-secondary">(${time})</small></p>`;
-                }
-                outputBox.innerHTML += `<p class="mb-1"><strong>AI:</strong> Thinking... <small class="text-secondary">(${time})</small></p>`;
-                outputBox.scrollTop = outputBox.scrollHeight;
-                document.getElementById('inputBox').value = '';
-                fileInput.value = '';
-            }
+        if (message) {
+            outputBox.innerHTML += `<div class="mb-1"><strong>You:</strong> ${message} </div>`;
+            scrollToBottom();
+
+            
+            connection.invoke("SendOllamaRequest", message).catch(err => console.error(err.toString()));
+
+            inputBox.value = '';
         }
+    }
 
-        function clearChat() {
-            document.getElementById('outputBox').innerHTML = '';
-        }
+    function scrollToBottom() {
+        const outputBox = document.getElementById('outputBox');
+        outputBox.scrollTop = outputBox.scrollHeight;
+    }
 
-        function toggleThinkMode() {
-            const outputBox = document.getElementById('outputBox');
-            const thinkBtn = document.getElementById('thinkBtn');
-            isThinking = !isThinking;
-            if (isThinking) {
-                outputBox.innerHTML += `<p class="mb-1 text-light"><em>Deep in thought...</em> <small class="text-secondary">(${new Date().toLocaleTimeString()})</small></p>`;
-                thinkBtn.innerHTML = '<i class="bi bi-bulb-fill glow"></i> Stop';
-            } else {
-                outputBox.innerHTML += `<p class="mb-1"><strong>AI:</strong> Done! <small class="text-secondary">(${new Date().toLocaleTimeString()})</small></p>`;
-                thinkBtn.innerHTML = '<i class="bi bi-bulb-fill glow"></i> Think';
-            }
-            outputBox.scrollTop = outputBox.scrollHeight;
-        }
+</script>
 
-        function toggleTheme() {
-            const chatInterface = document.querySelector('.chat-interface');
-            const chatArea = document.querySelector('.chat-area');
-            const sidebar = document.querySelector('.sidebar');
-            const inputs = document.querySelectorAll('.input-section input');
-            const buttons = document.querySelectorAll('.input-section button');
-
-            chatInterface.classList.toggle('bg-light');
-            chatInterface.classList.toggle('text-dark');
-            chatArea.classList.toggle('bg-light');
-            chatArea.classList.toggle('bg-secondary');
-            chatArea.classList.toggle('text-dark');
-            sidebar.classList.toggle('bg-light');
-            sidebar.classList.toggle('bg-dark');
-            inputs.forEach(input => {
-                input.classList.toggle('bg-light');
-                input.classList.toggle('bg-dark');
-                input.classList.toggle('text-dark');
-                input.classList.toggle('text-white');
-            });
-            buttons.forEach(button => {
-                button.classList.toggle('btn-outline-light');
-                button.classList.toggle('btn-outline-dark');
-            });
-        }
-    </script>
-}

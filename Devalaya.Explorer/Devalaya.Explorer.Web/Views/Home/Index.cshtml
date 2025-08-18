@@ -1,4 +1,5 @@
-﻿@{
+﻿@model HomePageModel
+@{
     ViewData["Title"] = "Home Page";
     Layout = "_Layout";
 }
@@ -12,7 +13,7 @@
     </div>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="~/images/home-3.webp" class="d-block w-100" style="height: 650px; object-fit: cover;" alt="Image 1">
+            <img src="~/images/home-3.webp" class="d-block w-100" style="height: 600px; alt="Image 1">
             <div class="carousel-caption d-none d-md-block">
                 <h1><b>श्रीमद् भागवत गीता</b></h1>
                 <p>“Believe me! I am the only truth”</p>
@@ -45,25 +46,16 @@
 </div>
 
 <!-- Temples Section -->
-<section class="temples-header text-center my-5">
+<section class="temples-header text-center my-2">
     <h3><i class="fa-solid fa-om"></i> Temples <i class="fa-solid fa-om"></i></h3>
-    <h1><b>Most Popular Temples</b></h1>
-    <div class="row justify-content-center mt-4">
-        @* Static Data (For Frontend Only) *@
-        @{
-            var temples = new List<dynamic>
-                {
-                new { Name = "Temple 1", Deity = "Shiva", ImagePath = "images/home-3.webp", Id = 1 },
-                new { Name = "Temple 2", Deity = "Vishnu", ImagePath = "images/home-4.webp", Id = 2 },
-                new { Name = "Temple 3", Deity = "Durga", ImagePath = "images/home-3.webp", Id = 3 },
-                new { Name = "Temple 4", Deity = "Ganesha", ImagePath = "images/home-4.webp", Id = 4 }
-                };
-        }
-        @foreach (var temple in temples)
+    <h1><b>Most Recent Temples</b></h1>
+    <div class="row justify-content-center ">
+       
+        @foreach (var temple in Model.Temples)
         {
-            <div class="col-lg-3 col-md-6 mb-4">
+            <div class="col-lg-3 col-md-6 mb-1">
                 <div class="card h-100 shadow-sm">
-                    <img src="~/@temple.ImagePath" class="card-img-top" style="height: 200px; object-fit: cover;" alt="@temple.Name">
+                    <img src="~/@temple.ImagePath" class="card-img-top" style="height: 180px; object-fit: cover;" alt="@temple.Name">
                     <div class="card-body text-center">
                         <h5 class="card-title"><b>@temple.Name</b></h5>
                         <p class="card-text">Deity: @temple.Deity</p>
@@ -107,16 +99,8 @@
     <h3><i class="fa-solid fa-om"></i> Festivals <i class="fa-solid fa-om"></i></h3>
     <h1><b>Latest Events</b></h1>
     <div class="row justify-content-center mt-4">
-        @* Static Data (For Frontend Only) *@
-        @{
-            var events = new List<dynamic>
-                {
-                new { Name = "Shivaratri", EventDate = "Aug 15", Contact = "9841234567", Details = "Night dedicated to Lord Shiva." },
-                new { Name = "Dashain", EventDate = "Oct 10", Contact = "9801234567", Details = "The biggest Hindu festival." },
-                new { Name = "Tihar", EventDate = "Nov 5", Contact = "9811234567", Details = "Festival of lights and worship of animals." }
-                };
-        }
-        @foreach (var ev in events)
+        
+        @foreach (var ev in Model.Events)
         {
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="card h-100 shadow-sm p-3">
