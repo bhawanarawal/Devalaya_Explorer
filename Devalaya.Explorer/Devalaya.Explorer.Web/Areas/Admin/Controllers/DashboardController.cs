@@ -2,9 +2,10 @@ using System.Diagnostics;
 using Devalaya.Explorer.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Devalaya.Explorer.Web.Controllers
+namespace Devalaya.Explorer.Web.Areas.Admin.Controllers
 {
-    public class AdminController : Controller
+    [Area("Admin")]
+    public class DashboardController : Controller
     {
         public IActionResult Index()
         {

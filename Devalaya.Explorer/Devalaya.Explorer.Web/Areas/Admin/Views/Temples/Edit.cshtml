@@ -1,17 +1,18 @@
 ﻿@model Temple
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
 <h4>Temple</h4>
 <hr />
 <div class="row">
     <div class="col-8">
-        <form asp-action="Create" enctype="multipart/form-data" method="post">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -33,19 +34,21 @@
                 <span asp-validation-for="Deity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MadeYear" class="control-label"></label>
-                <input asp-for="MadeYear" class="form-control" />
-                <span asp-validation-for="MadeYear" class="text-danger"></span>
+                <label asp-for="BuiltYear" class="control-label"></label>
+                <input asp-for="BuiltYear" class="form-control" />
+                <span asp-validation-for="BuiltYear" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" type="file" multiple accept="image/*" />
-                <span asp-validation-for="Image" class="text-danger"></span>
+                <label asp-for="Images" class="control-label"></label>
+                <input asp-for="Images" class="form-control" type="file" multiple accept="image/*" />
+                <span asp-validation-for="Images" class="text-danger"></span>
             </div>
 
+            <input type="hidden" asp-for="Slug" />
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

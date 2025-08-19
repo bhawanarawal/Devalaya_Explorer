@@ -1,0 +1,66 @@
+﻿@model List<Temple>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Image
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+               Details
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Deity
+            </th>
+            <th>
+                MadeYear
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/@item.ImagePath" width="40" />
+                    
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Details
+                </td>
+                <td>
+                    @item.Address
+                </td>
+                <td>
+                    @item.Deity
+                </td>
+                <td>
+                    @item.BuiltYear
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pencil"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

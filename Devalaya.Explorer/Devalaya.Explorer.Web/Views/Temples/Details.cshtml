@@ -13,10 +13,11 @@
         <h4><b>Deity:</b> @Model.Deity</h4>
     </div>
 
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.310788687365!2d85.30862681174254!3d27.707688976082995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18ff009739cf%3A0xf465f5cda99678c5!2sUgratara%20Temple!5e0!3m2!1sen!2snp!4v1755610753827!5m2!1sen!2snp" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     <!-- Introduction Section -->
     <div class="mb-5">
         <h2 class="mb-3 fw-bold">About @Model.Name</h2>
-        <p>Made Year: @Model.MadeYear</p>
+        <p>Made Year: @Model.BuiltYear</p>
     </div>
 
     <!-- Historical Background -->
@@ -26,26 +27,24 @@
     </div>
 
     <!-- Gallery Section -->
+
     <div class="mb-5">
         <h3 class="text-center fw-bold mb-4">Gallery</h3>
-        <div class="row justify-content-center">
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Temple Image" style="height: 200px; object-fit: cover;">
+
+       
+            <div class="row justify-content-center">
+            @foreach (var image in Model.Galleries)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="/@image.ImagePath" class="card-img-top" alt="Temple Image" style="height: 200px; object-fit: cover;">
+                    </div>
                 </div>
+            }
             </div>
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Temple Image" style="height: 200px; object-fit: cover;">
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Temple Image" style="height: 200px; object-fit: cover;">
-                </div>
-            </div>
-        </div>
+        
     </div>
+
 
     <!-- Review Form -->
     <div class="mb-5">

@@ -1,4 +1,4 @@
-/* Reset and base styles */
+﻿/* Reset and base styles */
 * {
     margin: 0;
     padding: 0;
@@ -92,7 +92,7 @@
 
 /* Scrollbar styles */
 html::-webkit-scrollbar {
-    width: 1rem;
+    width: 10px;
 }
 
 html::-webkit-scrollbar-track {
@@ -111,8 +111,11 @@ section {
 
 /* Carousel */
 html, body {
-    height: 77vh;
-    
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    height: auto; 
 }
 
 .carousel,
@@ -167,7 +170,6 @@ html, body {
     }
 }
 
-/* Typography for headers */
 .temples-header h1,
 .section-about h1,
 .section-events h1 {
@@ -188,14 +190,13 @@ html, body {
     margin-top: 1rem;
 }
 
-/* Section about */
+
 .section-about {
-    max-width: 95%;
+    max-width: 100%;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
-    margin-left: 2.5rem;
-    padding: 1rem;
+    padding:5px;
 }
 
 /* Button styles */
@@ -204,161 +205,4 @@ html, body {
     background-color: dodgerblue;
     color: white;
     font-size: 1rem;
-    border-radius: 10px;
-    border: 1px solid black;
-    width: 20-25%;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-    .text .btn:hover,
-    .temple-button .btn:hover {
-        background-color: #0056b3;
-    }
-
-/* Text content positioning */
-.text {
-    position: absolute;
-    left: 550px;
-    top: 25px;
-    padding-top: 2rem;
-    margin-top: 1rem;
-}
-
-    .text h2 {
-        font-size: 22px;
-        color: black;
-        margin-left: 2rem;
-        margin-top: 2rem;
-    }
-
-    .text p {
-        font-size: 20px;
-        color: black;
-        font-weight: bold;
-    }
-
-    .text h4 {
-        font-size: 20px;
-        color: grey;
-        margin-left: 2rem;
-        margin-top: 1rem;
-    }
-
-/* Card styles for other sections */
-.card {
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
-    width: 320px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    }
-
-.card-img-top {
-    border-radius: 10px;
-    object-fit: cover;
-}
-
-.card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 0;
-}
-
-.card-text {
-    font-size: 1rem;
-    margin-bottom: 0;
-    color: #555;
-}
-
-.btn-light {
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-weight: bold;
-    text-transform: lowercase;
-    border: none;
-}
-
-    .btn-light:hover {
-        background-color: #0056b3;
-        color: #f8f9fa;
-    }
-
-.btn-primary {
-    color: white;
-    padding: 12px 24px;
-    font-weight: bold;
-    text-transform: uppercase;
-    border: none;
-}
-
-    .btn-primary:hover {
-        background-color: #d15546;
-    }
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .carousel-item .col-lg-4 {
-        flex: 1 1 45%;
-        margin-bottom: 20px;
-    }
-}
-
-/* Scrollbar styles */
-html::-webkit-scrollbar {
-    width: 1rem;
-}
-
-html::-webkit-scrollbar-track {
-    background-color: white;
-}
-
-html::-webkit-scrollbar-thumb {
-    background-color: red;
-}
-
-/* Utility */
-.logout, .username {
-    color: red;
-    margin-top: 0.5rem;
-    margin-right: 1rem;
-    text-transform: capitalize;
-}
-
-/* Buttons for previous and next on custom sliders (if used) */
-.prev-btn,
-.next-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: dodgerblue;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    z-index: 10;
-}
-
-.prev-btn {
-    left: 10px;
-}
-
-.next-btn {
-    right: 10px;
-}
-
-    .prev-btn:hover,
-    .next-btn:hover {
-        background-color: #0056b3;
-    }
+    border-radius: 1;

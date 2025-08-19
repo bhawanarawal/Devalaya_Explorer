@@ -22,7 +22,7 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand me-auto" href="home.php">
-                <span><img src="images/icon-7.jpg">Devalaya</span>
+                <span><img src="~/images/icon-7.jpg">Devalaya</span>
             </a>
 
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
@@ -36,13 +36,13 @@
                             <a class="nav-link mx-lg-2 active" aria-current="page" href="/Home/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="/Temples/UserIndex">Temples</a>
+                            <a class="nav-link mx-lg-2" href="/Temples">Temples</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link mx-lg-2" href="galleries.php">Gallery</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-lg-2" href="/lessons/UserIndex">Lessons</a>
+                            <a class="nav-link mx-lg-2" href="/lessons">Lessons</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link mx-lg-2" href="/Home/About">About Us</a>
@@ -53,21 +53,8 @@
                         <li class="nav-item">
                             <a class="nav-link mx-lg-2" href="/Home/ChatBot" target="_blank">Chat With Us</a>
                         </li>
-                        @* <?php
-                        if ($auth->isLoggedIn()) {
-                        ?>
-                        <div class="username">
-                            Hello ,
-                            <a><?php  echo  $auth->getUsername(); ?></a>
-                        </div>
-                        <form method="POST">
-                            <a href="auth/logout.php" type="submit" class="logout"><i class="fa-solid fa-right-from-bracket"></i></a>
-                        </form>
-                        <?php } else {
-                        ?>
-                        <a href="auth/login.php" class="login"><i class="fa-solid fa-user"></i></a>
-                        <?php }
-                        ?> *@
+
+                        <partial name="_LoginPartial" />                        
 
                     </ul>
                 </div>
@@ -84,7 +71,7 @@
     <footer>
         <div class="container">
             <div class="footer-image">
-                <img src="images/icon-9.jpg" />
+                <img src="~/images/icon-9.jpg" />
             </div>
 
             <div class="sec aboutus">
