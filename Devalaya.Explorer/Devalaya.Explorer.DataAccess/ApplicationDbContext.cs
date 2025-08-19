@@ -1,10 +1,11 @@
 ﻿using Devalaya.Explorer.DataAccess.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Devalaya.Explorer.DataAccess;
 
-public class ApplicationDbContext : IdentityDbContext
+public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 {
     public DbSet<Temple> Temples { get; set; } 
     public DbSet<Event> Events { get; set; }

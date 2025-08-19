@@ -35,9 +35,9 @@ public class TemplesRepository : ITemplesRepository
     {
         if (count != 0)
         {
-            return await _context.Temples.Take(count).ToListAsync();
+            return await _context.Temples.Include(x=>x.Galleries).Take(count).ToListAsync();
         }
-        return await _context.Temples.ToListAsync();
+        return await _context.Temples.Include(x => x.Galleries).ToListAsync();
     }
 
     public async Task<Temple?> GetTempleByIdAsync(int id)
@@ -48,7 +48,7 @@ public class TemplesRepository : ITemplesRepository
     }
     public async Task<Temple?> GetTempleBySlugAsync(string slug)
     {
-        return await _context.Temples.FirstOrDefaultAsync(t => t.Slug == slug);
+        return await _context.Temples.Include(x => x.Galleries).FirstOrDefaultAsync(t => t.Slug == slug);
     }
     public async Task UpdateTempleAsync(Temple temple)
     {

@@ -11,11 +11,11 @@ public class Temple: BaseModel
     public string Address { get; set; } = string.Empty;
     public string Deity { get; set; } = string.Empty;
     [NotMapped]
-    public IFormFile? Image { get; set; }
+    public List<IFormFile?> Images { get; set; }
     public string? ImagePath { get; set; }
 
     public string? Slug { get; set; }
-    public DateTime? MadeYear { get; set; } 
+    public string? BuiltYear { get; set; }
     public List<Event>? Events { get; set; }
     public List<Favourite>? Favourites { get; set; }
     public List<Gallery>? Galleries { get; set; }
