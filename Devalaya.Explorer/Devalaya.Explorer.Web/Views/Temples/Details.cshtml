@@ -5,76 +5,52 @@
     Layout = "_Layout";
 }
 
-<section class="container py-5">
-    <!-- Header -->
-    <div class="text-center mb-5">
-        <h1><b>@Model.Name</b></h1>
-        <h4><b>Location:</b> @Model.Address</h4>
-        <h4><b>Deity:</b> @Model.Deity</h4>
+<section class="container-fluid py-4 px-4">
+    
+    <div class="text-center mb-4">
+        <h1 class="display-3 fw-bold">@Model.Name</h1>
+        <p class="h5 mb-1"><b>Location:</b> @Model.Address</p>
+        <p class="h5"><b>Deity:</b> @Model.Deity</p>
     </div>
 
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.310788687365!2d85.30862681174254!3d27.707688976082995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18ff009739cf%3A0xf465f5cda99678c5!2sUgratara%20Temple!5e0!3m2!1sen!2snp!4v1755610753827!5m2!1sen!2snp" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    <!-- Introduction Section -->
-    <div class="mb-5">
-        <h2 class="mb-3 fw-bold">About @Model.Name</h2>
-        <p>Made Year: @Model.BuiltYear</p>
+   
+    <div class="mb-3">
+        <h2 class="h2 fw-bold mb-4">About @Model.Name</h2>
+        <p class="text-muted mb-1"><b>Built Year:</b> @Model.BuiltYear</p>
     </div>
 
-    <!-- Historical Background -->
-    <div class="mb-5">
-        <h2 class="mb-3 fw-bold">Historical Background</h2>
+   
+    <div class="mb-3">
+        <h2 class="h2 fw-bold mb-4">Historical Background</h2>
         <p>@Model.Details</p>
     </div>
 
-    <!-- Gallery Section -->
-
+  
     <div class="mb-5">
-        <h3 class="text-center fw-bold mb-4">Gallery</h3>
-
-       
-            <div class="row justify-content-center">
+        <h3 class="text-center h3 fw-bold mb-4">Gallery</h3>
+        <div class="row g-3 justify-content-center">
             @foreach (var image in Model.Galleries)
             {
-                <div class="col-md-3 mb-4">
-                    <div class="card">
-                        <img src="/@image.ImagePath" class="card-img-top" alt="Temple Image" style="height: 200px; object-fit: cover;">
+                <div class="col-6 col-sm-4 col-md-3">
+                    <div class="card rounded-3 overflow-hidden shadow-sm">
+                        <img src="/@image.ImagePath" class="card-img-top img-fluid" alt="Temple Image" style="height: 180px; object-fit: cover;">
                     </div>
                 </div>
             }
-            </div>
-        
+        </div>
     </div>
 
-
-    <!-- Review Form -->
     <div class="mb-5">
-        <h4 class="text-center mb-3">Please Rate this Site</h4>
-        <form id="reviewForm">
+        <h4 class="text-center h4 fw-bold mb-4">Please Rate this Site</h4>
+        <form id="reviewForm" class="mx-auto" style="max-width: 600px;">
             <div class="d-flex justify-content-center mb-3 star-rating">
-                <input type="radio" id="star5" name="rating" value="5" class="d-none" />
-                <label for="star5" class="fs-1 text-warning mx-1" style="cursor: pointer;">
-                    <i class="fa-solid fa-star"></i>
-                </label>
-
-                <input type="radio" id="star4" name="rating" value="4" class="d-none" />
-                <label for="star4" class="fs-1 text-warning mx-1" style="cursor: pointer;">
-                    <i class="fa-solid fa-star"></i>
-                </label>
-
-                <input type="radio" id="star3" name="rating" value="3" class="d-none" />
-                <label for="star3" class="fs-1 text-warning mx-1" style="cursor: pointer;">
-                    <i class="fa-solid fa-star"></i>
-                </label>
-
-                <input type="radio" id="star2" name="rating" value="2" class="d-none" />
-                <label for="star2" class="fs-1 text-warning mx-1" style="cursor: pointer;">
-                    <i class="fa-solid fa-star"></i>
-                </label>
-
-                <input type="radio" id="star1" name="rating" value="1" class="d-none" />
-                <label for="star1" class="fs-1 text-warning mx-1" style="cursor: pointer;">
-                    <i class="fa-solid fa-star"></i>
-                </label>
+                @for (int i = 5; i >= 1; i--)
+                {
+                    <input type="radio" id="star@i" name="rating" value="@i" class="d-none" />
+                    <label for="star@i" class="fs-2 text-warning mx-1" style="cursor: pointer;">
+                        <i class="fa-solid fa-star"></i>
+                    </label>
+                }
             </div>
 
             <div class="mb-3">
@@ -82,7 +58,7 @@
             </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-primary w-25">Send</button>
+                <button type="submit" class="btn btn-success btn-lg px-4">Send</button>
             </div>
         </form>
     </div>
@@ -90,17 +66,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Star click animation
+   
     document.querySelectorAll('.star-rating label').forEach(star => {
         star.addEventListener('click', function () {
-            this.style.transform = 'scale(1.2)';
+            this.style.transform = 'scale(1.3)';
             setTimeout(() => {
                 this.style.transform = 'scale(1)';
             }, 200);
         });
     });
 
-    // Optional: prevent form submission for now
+    
     document.getElementById('reviewForm').addEventListener('submit', function (e) {
         e.preventDefault();
         alert('Review submitted (frontend only).');

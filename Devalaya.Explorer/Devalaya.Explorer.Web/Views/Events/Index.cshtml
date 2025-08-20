@@ -1,59 +1,31 @@
 ﻿@model IEnumerable<Event>
 
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Details)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EventDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contact)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Temple)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-               @item.Name
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Details)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contact)
-            </td>
-            <td>
-               @(item.Temple?.Name??"NA")
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="accordion m-4" id="accordionExample">
+    @{
+        bool first = true; 
+    }
+    @foreach (var item in Model)
+    {
+        var collapseId = "collapse" + item.Id;
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button @(first ? "" : "collapsed")"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#@collapseId"
+                        aria-expanded="@(first ? "true" : "false")"
+                        aria-controls="@collapseId">
+                    <b>Event:</b> @item.Name &nbsp;&nbsp;&nbsp;
+                    <b>Temple:</b> @(item.Temple?.Name ?? "NA") &nbsp;&nbsp;&nbsp;
+                    <b>Event Date:</b> @item.EventDate.ToString("yyyy-MM-dd")
+                </button>
+            </h2>
+            <div id="@collapseId" class="accordion-collapse collapse @(first ? "show" : "")" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p>@item.Details</p>
+                </div>
+            </div>
+        </div>
+        first = false; 
+    }
+</div>

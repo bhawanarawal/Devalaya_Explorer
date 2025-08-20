@@ -105,18 +105,37 @@
 <section class="section-events text-center my-4">
     <h3><i class="fa-solid fa-om"></i> Festivals <i class="fa-solid fa-om"></i></h3>
     <h1><b>Latest Events</b></h1>
-    <div class="row justify-content-center mt-1">
-        
+
+    <div class="row justify-content-center mt-4">
         @foreach (var ev in Model.Events)
         {
-            <div class="col-lg-3 col-md-6 mb-1">
-                <div class="card h-100 shadow-sm p-3">
-                    <h5 class="card-title"><b>@ev.Name</b></h5>
-                    <h2><i class="fa-regular fa-calendar-days"></i> <b>@ev.EventDate</b></h2>
-                    <h4><b>Contact:</b> @ev.Contact</h4>
-                    <p><b>About:</b> @ev.Details</p>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm rounded-2" style="min-height: 150px;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-truncate" style="color: #ff4500; font-size: 1.4rem;">
+                            <b>@ev.Name</b>
+                        </h5>
+                        <p class="card-text mb-2">
+                            <i class="fa-solid fa-place-of-worship me-2"></i>
+                            <b>Temple:</b> @(ev.Temple?.Name ?? "NA")
+                        </p>
+                        <p class="card-text mb-2">
+                            <i class="fa-regular fa-calendar-days me-2"></i>
+                            <b>Event Date:</b> @ev.EventDate.ToString("yyyy-MM-dd")
+                        </p>
+                        <p class="card-text">
+                            <i class="fa-solid fa-phone me-2"></i>
+                            <b>Contact:</b> @ev.Contact
+                        </p>
+                    </div>
                 </div>
             </div>
         }
     </div>
+    <div class="text-center mt-2">
+        <a href="/Events" class=" btn btn-outline-primary  btn-lg">See More Events</a>
+    </div>
 </section>
+
+
+

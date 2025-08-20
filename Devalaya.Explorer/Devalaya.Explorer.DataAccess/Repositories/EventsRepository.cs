@@ -37,7 +37,7 @@ namespace Devalaya.Explorer.DataAccess.Repositories
 
         public async Task<IEnumerable<Event>> GetAllEventsAsync()
         {
-            return await _context.Events.ToListAsync();
+            return await _context.Events.Include(x=>x.Temple).ToListAsync();
         }
 
         public async Task<Event> GetEventByIdAsync(int id)

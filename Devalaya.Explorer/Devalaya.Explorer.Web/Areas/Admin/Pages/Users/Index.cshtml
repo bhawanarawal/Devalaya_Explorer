@@ -1,0 +1,43 @@
+﻿@page
+@model Devalaya.Explorer.Web.Areas.Admin.Pages.Users.IndexModel
+
+<h2>All Users</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Email Confirmed</th>
+            <th>Phone Number</th>
+            <th>Phone Confirmed</th>
+            <th>Two Factor</th>
+            <th>Lockout End</th>
+            <th>Lockout Enabled</th>
+            <th>Access Failed Count</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.UsersWithRoles)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.EmailConfirmed</td>
+                <td>@user.PhoneNumber</td>
+                <td>@user.PhoneNumberConfirmed</td>
+                <td>@user.TwoFactorEnabled</td>
+                <td>@user.LockoutEnd</td>
+                <td>@user.LockoutEnabled</td>
+                <td>@user.AccessFailedCount</td>
+                <td>@string.Join(", ", user.Roles)</td>
+                <td>
+                    
+                    <a asp-page="./AssignRole" asp-route-id="@user.UserId">Assign Role</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

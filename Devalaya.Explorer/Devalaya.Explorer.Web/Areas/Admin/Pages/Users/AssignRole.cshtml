@@ -1,0 +1,30 @@
+﻿@page "{id}"
+@model Devalaya.Explorer.Web.Areas.Admin.Pages.Users.AssignRoleModel
+
+
+<h2>Assign Roles to @Model.UserName</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label>Roles:</label>
+        <div>
+            @foreach (var role in Model.AllRoles)
+            {
+                <div class="form-check">
+                    <input type="checkbox"
+                           name="SelectedRoles"
+                           value="@role"
+                           @(Model.UserRoles.Contains(role) ? "checked" : "")
+                           class="form-check-input" />
+
+                    <label class="form-check-label">@role</label>
+                </div>
+            }
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Roles</button>
+    <a asp-page="/Admin/Users/Index" class="btn btn-secondary">Cancel</a>
+</form>

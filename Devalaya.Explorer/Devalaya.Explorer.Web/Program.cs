@@ -18,6 +18,7 @@ builder.Services.AddScoped<ILessonsRepository, LessonsRepository>();
 builder.Services.AddScoped<IGalleryRepository, GalleryRepository>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();

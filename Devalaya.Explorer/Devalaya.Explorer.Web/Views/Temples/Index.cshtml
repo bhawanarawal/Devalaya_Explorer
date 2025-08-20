@@ -7,13 +7,16 @@
 <section class="alltemples-header text-center">
     <h1><b><i class="fa-solid fa-om"></i> Temples <i class="fa-solid fa-om"></i></b></h1>
 
-    <div class="container mt-4">
-        <div class="row" id="templesContainer">
+    <div class="mt-4 px-3">
+        <div class="row gx-4" id="templesContainer">
             @foreach (var temple in Model)
             {
                 <div class="col-lg-3 mb-4 temple-card">
                     <div class="card h-100">
-                        <img src="@(temple.Galleries?.Count == 0 ? "images/home-4.jpg" : temple.Galleries[0].ImagePath)" class="card-img-top" style="height: 180px; object-fit: cover;" alt="@temple.Name">
+                        <img src="@(temple.Galleries?.Count == 0 ? "images/home-4.jpg" : temple.Galleries[0].ImagePath)"
+                             class="card-img-top"
+                             style="height: 170px; object-fit: cover;"
+                             alt="@temple.Name">
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title"><b>@temple.Name</b></h5>
                             <p class="card-text">Deity: @temple.Deity</p>
