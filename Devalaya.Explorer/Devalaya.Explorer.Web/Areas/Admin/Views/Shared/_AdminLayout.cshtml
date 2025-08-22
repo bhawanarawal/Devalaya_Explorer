@@ -17,17 +17,36 @@
     <!-- Custom styles for this template-->
     <link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
 </head>
-<body id="page-top">
+<body id="page-top" >
 
     <!-- Page Wrapper -->
-    <div id="wrapper">
+    <div id="wrapper" class="d-flex flex-column flex-grow-1">
 
-        <!-- Sidebar -->
-        <partial name="_Sidebar" />
-        <!-- End of Sidebar -->
-        <div class="p-3 w-100">
-            @RenderBody()
+        <!-- Main Row: Sidebar + Content -->
+        <div class="d-flex flex-grow-1">
+
+            <!-- Sidebar -->
+            <partial name="_Sidebar" />
+            <!-- End of Sidebar -->
+            <!-- Main Content -->
+            <div class="p-2 w-100">
+                @RenderBody()
+                
+            </div>
         </div>
+            <footer class="bg-black w-100">
+                <div class="container">
+                    <div class="text-center">
+                        <span>Copyright &copy; Devalaya @DateTime.Now.Year</span>
+                    </div>
+                </div>
+            </footer>
+            
+        
+        <!-- End of Main Row -->
+        <!-- Footer -->
+        
+
 
     </div>
     <!-- End of Page Wrapper -->
@@ -35,6 +54,8 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
+
+  
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -55,27 +76,13 @@
             </div>
         </div>
     </div>
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Devalaya @DateTime.Now.Year</span>
-            </div>
-        </div>
-    </footer>
-    <!-- Bootstrap core JavaScript-->
+
+    <!-- Scripts -->
     <script src="/admin/vendor/jquery/jquery.min.js"></script>
     <script src="/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
     <script src="/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
     <script src="/admin/js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
     <script src="/admin/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
     <script src="/admin/js/demo/chart-area-demo.js"></script>
     <script src="/admin/js/demo/chart-pie-demo.js"></script>
     @await RenderSectionAsync("Scripts", required: false)

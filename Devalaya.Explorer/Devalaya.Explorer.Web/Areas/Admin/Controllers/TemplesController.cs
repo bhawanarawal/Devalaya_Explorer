@@ -1,11 +1,13 @@
 ﻿using Devalaya.Explorer.DataAccess.Entities;
 using Devalaya.Explorer.DataAccess.Repositories;
 using Devalaya.Explorer.Web.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Devalaya.Explorer.Web.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class TemplesController(ITemplesRepository templesRepo,IGalleryRepository galleryRepo) : Controller
     {
         private readonly ITemplesRepository _templesRepository = templesRepo;
@@ -68,7 +70,7 @@ namespace Devalaya.Explorer.Web.Admin.Controllers
                 await _galleryRepository.AddGalleriesAsync(galleries);
                 
             }
-            return RedirectToAction(nameof(Index));
+            return View();
         }
 
         public async Task<IActionResult> Edit(int id)

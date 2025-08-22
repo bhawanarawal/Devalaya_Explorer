@@ -3,40 +3,33 @@
     ViewData["Title"] = "Lesson Page";
     Layout = "_Layout";
 }
+
 <section class="container my-5">
-    <!-- Title with Om icons and uppercase bold text -->
     <h1 class="text-center text-uppercase fw-bold mb-5" style="color: black;">
         <i class="fa-solid fa-om text-warning mx-2"></i>
         Seeds of Knowledge From Holy Books
         <i class="fa-solid fa-om text-warning mx-2"></i>
     </h1>
 
-    <!-- Search bar centered -->
     <div class="row justify-content-center mb-4">
-        <div class="col-md-6">
-            <input type="text" id="searchInput" class="form-control rounded-pill border-primary shadow-sm" placeholder="Search for lessons..." autocomplete="off" />
-            <div class="list-group mt-2" id="suggestions"></div>
+        <div class="col-md-6 position-relative">
+            <input type="text" id="searchInput" class="form-control rounded-pill border-primary shadow-sm" placeholder="Search by source..." autocomplete="off" />
+            <div class="list-group mt-2 position-absolute w-100" id="suggestions" style="z-index: 10;"></div>
         </div>
     </div>
 
-        
-                     
-                   
-               
-    @foreach(var lesson in Model)
-    {
-        <div class="quotecard d-flex align-items-center mt-2 p-3 bg-white rounded shadow-sm" data-source="Upanishads">
-            <img src="~/images/black-1.webp" class="rounded-circle me-3" style="width: 60px; height: 60px;" alt="Avatar" />
-            <div>
-                <p class="mb-1 blockquote">@lesson.Quote</p>
-                <small class="text-primary fw-bold">-@lesson.Source</small>
+    <div id="lessonsContainer">
+        @foreach (var lesson in Model)
+        {
+            <div class="quotecard d-flex align-items-center mt-2 p-3 bg-white rounded shadow-sm" data-source="@lesson.Source.Trim()">
+                <img src="~/images/black-1.webp" class="rounded-circle me-3" style="width: 60px; height: 60px;" alt="Avatar" />
+                <div>
+                    <p class="mb-1 blockquote">@lesson.Quote</p>
+                    <small class="text-primary fw-bold">- @lesson.Source</small>
+                </div>
             </div>
-        </div>
-    }
-    
-
-
-    
+        }
+    </div>
 </section>
 
 @section Scripts {
@@ -46,16 +39,20 @@
             const suggestions = document.getElementById('suggestions');
             const lessonsContainer = document.getElementById('lessonsContainer');
 
-            // Collect all sources from the lessons on page load
-            const allSources = Array.from(lessonsContainer.querySelectorAll('.quotecard'))
-                .map(lesson => lesson.getAttribute('data-source'));
+            const lessonCards = Array.from(lessonsContainer.querySelectorAll('.quotecard'));
 
-            window.showSuggestions = function(query) {
-                const filteredSources = allSources.filter(source => source.toLowerCase().includes(query.toLowerCase()));
-                if (filteredSources.length > 0) {
-                    suggestions.innerHTML = filteredSources.map(source => `
-                        <button type="button" class="list-group-item list-group-item-action" onclick="selectSuggestion('${source}')">
-                            ${source}
+            // Hide all lessons initially
+            lessonCards.forEach(card => card.style.display = 'none');
+
+            // Collect all unique sources (trimmed)
+            const allSources = [...new Set(lessonCards.map(card => card.getAttribute('data-source').trim()))];
+
+            function showSuggestions(query) {
+                const filtered = allSources.filter(src => src.toLowerCase().includes(query.toLowerCase()));
+                if (filtered.length > 0 && query !== '') {
+                    suggestions.innerHTML = filtered.map(src => `
+                        <button type="button" class="list-group-item list-group-item-action text-start" onclick="selectSource(${JSON.stringify(src)})">
+                            ${src}
                         </button>
                     `).join('');
                     suggestions.style.display = 'block';
@@ -65,37 +62,25 @@
                 }
             }
 
-            window.filterLessons = function(source) {
-                const lessons = lessonsContainer.querySelectorAll('.quotecard');
-                lessons.forEach(lesson => {
-                    if (lesson.getAttribute('data-source') === source || source === '') {
-                        lesson.style.display = 'block';
+            window.selectSource = function(source) {
+                searchInput.value = source;
+                lessonCards.forEach(card => {
+                    if (card.getAttribute('data-source').trim() === source) {
+                        card.style.display = 'flex';
                     } else {
-                        lesson.style.display = 'none';
+                        card.style.display = 'none';
                     }
                 });
-            }
-
-            window.selectSuggestion = function(source) {
-                searchInput.value = source;
-                filterLessons(source);
                 suggestions.innerHTML = '';
                 suggestions.style.display = 'none';
             }
 
-            searchInput.addEventListener('focus', () => {
-                showSuggestions('');
+            searchInput.addEventListener('input', () => {
+                showSuggestions(searchInput.value.trim());
             });
 
-            searchInput.addEventListener('input', () => {
-                const query = searchInput.value.trim();
-                if (query === '') {
-                    filterLessons('');
-                    suggestions.innerHTML = '';
-                    suggestions.style.display = 'none';
-                } else {
-                    showSuggestions(query);
-                }
+            searchInput.addEventListener('focus', () => {
+                showSuggestions(searchInput.value.trim());
             });
 
             document.addEventListener('click', function(event) {

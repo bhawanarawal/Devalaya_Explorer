@@ -1,11 +1,13 @@
 ﻿using Devalaya.Explorer.DataAccess.Entities;
 using Devalaya.Explorer.DataAccess.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Devalaya.Explorer.Web.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class EventsController : Controller
     {
         private readonly IEventsRepository _eventsRepository;

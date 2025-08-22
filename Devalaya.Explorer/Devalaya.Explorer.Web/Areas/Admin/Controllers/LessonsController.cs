@@ -1,10 +1,12 @@
 ﻿using Devalaya.Explorer.DataAccess.Entities;
 using Devalaya.Explorer.DataAccess.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Devalaya.Explorer.Web.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class LessonsController : Controller
     {
         private readonly ILessonsRepository _lessonsRepository;
