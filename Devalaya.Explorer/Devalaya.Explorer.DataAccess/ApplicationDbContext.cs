@@ -9,7 +9,7 @@ public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 {
     public DbSet<Temple> Temples { get; set; } 
     public DbSet<Event> Events { get; set; }
-    public DbSet<Favourite> Favoutites { get; set; }
+    public DbSet<Favourite> Favourites { get; set; }
     public DbSet<Gallery> Galleries { get; set; }
     public DbSet<Lesson> Lessons { get; set; }
     public DbSet<Review> Reviews { get; set; }

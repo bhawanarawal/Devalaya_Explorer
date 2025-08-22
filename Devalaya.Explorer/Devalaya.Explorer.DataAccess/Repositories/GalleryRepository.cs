@@ -5,7 +5,8 @@ namespace Devalaya.Explorer.DataAccess.Repositories;
 public interface IGalleryRepository
 {
     Task<IEnumerable<Gallery>> GetGalleriesAsync(int templeId=0);
-    
+    Task<int> GetImageCount();
+
     Task AddGalleriesAsync(List<Gallery> galleries);
  
 }
@@ -33,5 +34,10 @@ public class GalleryRepository : IGalleryRepository
         // If no templeId is provided, return all galleries
         return await _context.Galleries.ToListAsync();
 
+    }
+
+    public async Task<int> GetImageCount()
+    {
+        return await _context.Galleries.CountAsync();
     }
 }

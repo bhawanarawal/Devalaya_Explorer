@@ -5,6 +5,7 @@ namespace Devalaya.Explorer.DataAccess.Repositories;
 public interface ITemplesRepository
 {
     Task<IEnumerable<Temple>> GetTemplesAsync(int count = 0);
+    Task<int> GetTemplesCount();
     Task<Temple?> GetTempleByIdAsync(int id);
     Task<Temple?> GetTempleBySlugAsync(string slug);
     Task AddTempleAsync(Temple temple);
@@ -54,5 +55,10 @@ public class TemplesRepository : ITemplesRepository
     {
         _context.Update(temple);
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<int> GetTemplesCount()
+    {
+        return await _context.Temples.CountAsync();
     }
 }

@@ -8,6 +8,7 @@ namespace Devalaya.Explorer.DataAccess.Repositories
     public interface IEventsRepository
     {
         Task<IEnumerable<Event>> GetAllEventsAsync();
+        Task<int> GetEventCount();
         Task<Event> GetEventByIdAsync(int id);
         Task AddEventAsync(Event newEvent);
         Task UpdateEventAsync(Event updatedEvent);
@@ -43,6 +44,11 @@ namespace Devalaya.Explorer.DataAccess.Repositories
         public async Task<Event> GetEventByIdAsync(int id)
         {
             return await _context.Events.FindAsync(id);
+        }
+
+        public async Task<int> GetEventCount()
+        {
+            return await _context.Events.CountAsync();
         }
 
         public async Task UpdateEventAsync(Event updatedEvent)
